@@ -1,4 +1,5 @@
 # members-only
+
 A website for riddle enjoyers only! This Node/Express project is made to practice with authentication using Passport.js so that while outsiders can see posts, only members will know who wrote it and when. There will also be an admin level where they can delete posts on top of the existing member privileges.
 
 The strategy used in this project will be passport-local’s “LocalStrategy.” It takes a username and password, does some verification, and then either logs the user in or sends an error message. Using this, users will be able to register, log in, log out, or do anything that an account offers. Login information will also be saved while the user moves around the website through the power of sessions which is built into Passport.js as well. All in all, authentication is one of the most common website features so doing this project will set a great foundation for whichever project I’ll be doing in the future. It also seems really awesome and cool to do so I’m excited for this project!
