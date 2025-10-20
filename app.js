@@ -13,6 +13,9 @@ app.set("view engine", "ejs");
 const assetsPath = path.join(import.meta.dirname, "public");
 app.use(express.static(assetsPath));
 
+// handles "application/x-www-form-urlencoded" form data and places it into req.body
+app.use(express.urlencoded({ extended: true }));
+
 app.use("/", indexRouter);
 app.use((err, req, res, next) => {
   console.error(err);
