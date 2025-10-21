@@ -1,7 +1,8 @@
 import express from "express";
 import path from "path";
-import { indexRouter } from "./routes/indexRouter.js";
 import "dotenv/config";
+import { indexRouter } from "./routes/indexRouter.js";
+import { authenticationRouter } from "./routes/authenticationRouter.js";
 
 const app = express();
 
@@ -17,6 +18,7 @@ app.use(express.static(assetsPath));
 app.use(express.urlencoded({ extended: true }));
 
 app.use("/", indexRouter);
+app.use("/", authenticationRouter);
 app.use((err, req, res, next) => {
   console.error(err);
   res.status(err.statusCode || 500).send(err);

@@ -58,3 +58,28 @@ const validateUser = [
     .withMessage(`Password ${passwordErr}`),
 ];
 
+const getSignUp = (req, res) => {
+  res.render("signUp", {
+    title: "Sign Up"
+  })
+}
+
+const postSignUp = [
+  validateUser,
+  (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).render("signUp", {
+        title: "Sign Up",
+        previousValues: req.body,
+        errors: errors.array(),
+      });
+    };
+    const { first_name, last_name, email, password } = matchedData(req);
+    // add user
+    res.redirect("/");
+  }
+];
+
+export { getSignUp, postSignUp };
+
