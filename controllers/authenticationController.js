@@ -4,6 +4,7 @@ const requiredErr = "is required";
 const alphaErr = "must only contain letters";
 const lengthErr = (maxLength, minLength = 1) =>
   `must be between ${minLength} and ${maxLength} characters`;
+const usernameErr = "must not contain any special characters";
 const emailErr = "must be a valid email address";
 // passwords must be at least 8 characters long
 const passwordErr =
@@ -30,16 +31,34 @@ const validateUser = [
     .bail()
     .isAlpha()
     .withMessage(`Last name ${alphaErr}`),
-  // could also add a check for existing email
-  body("email")
+  // could also add a check for existing username
+  body("username")
     .trim()
     .notEmpty()
-    .withMessage(`Email ${requiredErr}`)
+    .withMessage(`Username ${requiredErr}`)
     .bail()
-    .isLength({ min: 1, max: 64 })
-    .withMessage(`Email ${lengthErr(255)}`)
+    .isLength({ min: 3, max: 64 })
+    .withMessage(`Username ${lengthErr(255, 3)}`)
     .bail()
-    .isEmail()
+    .custom((value) => {
+      // must be a valid username (letters, numbers, dots and underscores only)
+      if (value.includes("@")) return true;
+
+      const regex = /^(?=.{3,255}$)[a-zA-Z0-9](?:[a-zA-Z0-9._]*[a-zA-Z0-9])$/;
+      if (!regex.test(value)) throw new Error("Invalid username format");
+      return true;
+    })
+    .withMessage(`Username ${usernameErr}`)
+    .bail()
+    .custom((value) => {
+      // must be a valid email address
+      if (!value.includes("@")) return true;
+
+      const regex =
+        /^(?=.{3,254}$)[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,63}$/;
+      if (!regex.test(value)) throw new Error("Invalid email format");
+      return true;
+    })
     .withMessage(`Email ${emailErr}`),
   body("password")
     .trim()
@@ -49,10 +68,10 @@ const validateUser = [
     .isLength({ min: 1, max: 64 })
     .withMessage(`Password ${lengthErr(255)}`)
     .bail()
-    .custom(async (value) => {
+    .custom((value) => {
       // checks if password contains one letter, number, and a special character
       const regex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@$%^&*+#]).+$/;
-      if (!regex.test(value)) throw new Error("");
+      if (!regex.test(value)) throw new Error("Invalid password format");
       return true;
     })
     .withMessage(`Password ${passwordErr}`),
@@ -60,9 +79,9 @@ const validateUser = [
 
 const getSignUp = (req, res) => {
   res.render("signUp", {
-    title: "Sign Up"
-  })
-}
+    title: "Sign Up",
+  });
+};
 
 const postSignUp = [
   validateUser,
@@ -74,12 +93,11 @@ const postSignUp = [
         previousValues: req.body,
         errors: errors.array(),
       });
-    };
-    const { first_name, last_name, email, password } = matchedData(req);
+    }
+    const { first_name, last_name, username, password } = matchedData(req);
     // add user
     res.redirect("/");
-  }
+  },
 ];
 
 export { getSignUp, postSignUp };
-

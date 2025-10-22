@@ -26,10 +26,10 @@
           </span>
         </p>
         <p>
-          <label for="email">Email <strong><span aria-label="required" class="required">*</span></strong></label>
-          <input type="email" id="email" name="email" maxlength="255" value="<%= locals.previousValues?.email %>" required>
+          <label for="username">Username <strong><span aria-label="required" class="required">*</span></strong></label>
+          <input type="username" id="username" name="username" maxlength="255" value="<%= locals.previousValues?.username %>" required>
           <span class="error" role="alert" aria-live="polite">
-            <%= locals.errors?.find(error => error.path === 'email')?.msg %>
+            <%= locals.errors?.find(error => error.path === 'username')?.msg %>
           </span>
         </p>
         <p>
