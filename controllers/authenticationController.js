@@ -1,4 +1,5 @@
 import { body, validationResult, matchedData } from "express-validator";
+import { insertUser } from "../db/queries";
 
 const requiredErr = "is required";
 const alphaErr = "must only contain letters";
@@ -85,7 +86,7 @@ const getSignUp = (req, res) => {
 
 const postSignUp = [
   validateUser,
-  (req, res) => {
+  async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).render("signUp", {
@@ -95,7 +96,8 @@ const postSignUp = [
       });
     }
     const { first_name, last_name, username, password } = matchedData(req);
-    // add user
+    // NOTE: BE SURE TO ADD BCRYPT LATER. VERY IMPORTANT.
+    await insertUser(first_name, last_name, username, password);
     res.redirect("/");
   },
 ];
