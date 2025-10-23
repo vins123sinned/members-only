@@ -8,9 +8,9 @@ const lengthErr = (maxLength, minLength = 1) =>
   `must be between ${minLength} and ${maxLength} characters`;
 const usernameErr = "must not contain any special characters";
 const emailErr = "must be a valid email address";
-// passwords must be at least 8 characters long
 const passwordErr =
   "must include a letter, number, and special character (!@$%^&*+#)";
+const confirmErr = "do not match";
 
 const validateUser = [
   body("first_name")
@@ -67,8 +67,8 @@ const validateUser = [
     .notEmpty()
     .withMessage(`Password ${requiredErr}`)
     .bail()
-    .isLength({ min: 1, max: 64 })
-    .withMessage(`Password ${lengthErr(255)}`)
+    .isLength({ min: 8, max: 64 })
+    .withMessage(`Password ${lengthErr(255, 8)}`)
     .bail()
     .custom((value) => {
       // checks if password contains one letter, number, and a special character
@@ -77,6 +77,13 @@ const validateUser = [
       return true;
     })
     .withMessage(`Password ${passwordErr}`),
+  body("confirm_password")
+    .trim()
+    .custom((value, { req }) => {
+      if (value !== req.body.password) throw new Error(`Passwords must match`);
+      return true;
+    })
+    .withMessage(`Passwords ${confirmErr}`),
 ];
 
 const getSignUp = (req, res) => {

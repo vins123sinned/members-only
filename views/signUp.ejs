@@ -33,10 +33,17 @@
           </span>
         </p>
         <p>
-          <label for="password">Password</label>
-          <input type="password" id="password" name="password" maxlength="255" value="<%= locals.previousValues?.last_name %>" required>
+          <label for="password">Password <strong><span aria-label="required" class="required">*</span></strong></label>
+          <input type="password" id="password" name="password" maxlength="255" value="<%= locals.previousValues?.password %>" required>
           <span class="error" role="alert" aria-live="polite">
             <%= locals.errors?.find(error => error.path === 'password')?.msg %>
+          </span>
+        </p>
+         <p>
+          <label for="confirm_password">Confirm Password <strong><span aria-label="required" class="required">*</span></strong></label>
+          <input type="password" id="confirm_password" name="confirm_password" maxlength="255" value="<%= locals.previousValues?.confirm_password %>" required>
+          <span class="error" role="alert" aria-live="polite">
+            <%= locals.errors?.find(error => error.path === 'confirm_password')?.msg %>
           </span>
         </p>
       </section>
