@@ -1,5 +1,6 @@
+import bcrypt from "bcryptjs";
 import { body, validationResult, matchedData } from "express-validator";
-import { insertUser } from "../db/queries";
+import { insertUser } from "../db/queries.js";
 
 const requiredErr = "is required";
 const alphaErr = "must only contain letters";
@@ -96,9 +97,15 @@ const postSignUp = [
       });
     }
     const { first_name, last_name, username, password } = matchedData(req);
-    // NOTE: BE SURE TO ADD BCRYPT LATER. VERY IMPORTANT.
-    await insertUser(first_name, last_name, username, password);
-    res.redirect("/");
+
+    try {
+      const hashedPassword = await bcrypt.hash(password, 10);
+      await insertUser(first_name, last_name, username, hashedPassword);
+      res.redirect("/");
+    } catch (err) {
+      console.log(err);
+      next(err);
+    }
   },
 ];
 
