@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %></title>
+</head>
+<body>
+  <section class="log-in-section">
+    <form action="/log-in" method="POST" novalidate>
+      <h1>Log In</h1>
+      <p>Required fields are followed by a <strong><span aria-label="required" class="required">*</span></strong></p>
+      <section>
+        <p>
+          <label for="username">Username <strong><span aria-label="required" class="required">*</span></strong></label>
+          <input type="username" id="username" name="username" maxlength="255" value="<%= locals.previousValues?.username %>" required>
+          <span class="error" role="alert" aria-live="polite">
+            <%= locals.errors?.find(error => error.path === 'username')?.msg %>
+          </span>
+        </p>
+        <p>
+          <label for="password">Password <strong><span aria-label="required" class="required">*</span></strong></label>
+          <input type="password" id="password" name="password" maxlength="255" value="<%= locals.previousValues?.password %>" required>
+          <span class="error" role="alert" aria-live="polite">
+            <%= locals.errors?.find(error => error.path === 'password')?.msg %>
+          </span>
+        </p>
+      </section>
+      <section>
+        <button type="submit">Log in</button>
+      </section>
+    </form>
+  </section>
+</body>
+</html>
