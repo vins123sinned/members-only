@@ -1,3 +1,4 @@
+import passport from "passport";
 import bcrypt from "bcryptjs";
 import { body, validationResult, matchedData } from "express-validator";
 import { insertUser } from "../db/queries.js";
@@ -12,7 +13,7 @@ const passwordErr =
   "must include a letter, number, and special character (!@$%^&*+#)";
 const confirmErr = "do not match";
 
-const validateUser = [
+const validateSignIn = [
   body("first_name")
     .trim()
     .notEmpty()
@@ -86,6 +87,11 @@ const validateUser = [
     .withMessage(`Passwords ${confirmErr}`),
 ];
 
+const validateLogIn = [
+  body("username").trim().notEmpty().withMessage(`Username ${requiredErr}`),
+  body("password").trim().notEmpty().withMessage(`Password ${requiredErr}`),
+];
+
 const getSignUp = (req, res) => {
   res.render("signUp", {
     title: "Sign Up",
@@ -93,7 +99,7 @@ const getSignUp = (req, res) => {
 };
 
 const postSignUp = [
-  validateUser,
+  validateSignIn,
   async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -103,8 +109,8 @@ const postSignUp = [
         errors: errors.array(),
       });
     }
-    const { first_name, last_name, username, password } = matchedData(req);
 
+    const { first_name, last_name, username, password } = matchedData(req);
     try {
       const hashedPassword = await bcrypt.hash(password, 10);
       await insertUser(first_name, last_name, username, hashedPassword);
@@ -116,4 +122,31 @@ const postSignUp = [
   },
 ];
 
-export { getSignUp, postSignUp };
+const getLogIn = (req, res) => {
+  res.render("logIn", {
+    title: "Log In",
+  });
+};
+
+const postLogIn = [
+  validateLogIn,
+  async (req, res, next) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).render("logIn", {
+        title: "Log In",
+        previousValues: req.body,
+        errors: errors.array(),
+      });
+    }
+
+    // if there are no validation errors, then authenticate
+    next();
+  },
+  passport.authenticate("local", {
+    successRedirect: "/",
+    failureRedirect: "/",
+  }),
+];
+
+export { getSignUp, postSignUp, getLogIn, postLogIn };
