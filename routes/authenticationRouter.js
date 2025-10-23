@@ -1,6 +1,8 @@
 import { Router } from "express";
 import {
+  getLogIn,
   getSignUp,
+  postLogIn,
   postSignUp,
 } from "../controllers/authenticationController.js";
 import passport from "passport";
@@ -12,8 +14,9 @@ const verify = async (username, password, done) => {
 
   try {
     if (!user) return done(null, false, { message: "Incorrect username!" });
-    if (user.password !== password)
-      return done(null, false, { message: "Incorrect password" });
+    const match = await bcrypt.compare(password, user.password);
+    if (!match) return done(null, false, { message: "Incorrect password" });
+
     return done(null, user);
   } catch (err) {
     return done(err);
@@ -39,5 +42,7 @@ const authenticationRouter = Router();
 
 authenticationRouter.get("/sign-up", getSignUp);
 authenticationRouter.post("/sign-up", postSignUp);
+authenticationRouter.get("/log-in", getLogIn);
+authenticationRouter.post("/log-in", postLogIn);
 
 export { authenticationRouter };
