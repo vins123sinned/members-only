@@ -1,10 +1,15 @@
 import express from "express";
 import path from "path";
 import "dotenv/config";
+import session from "express-session";
+import passport from "passport";
+import connectPgSimple from "connect-pg-simple";
+import { pool } from "./db/pool.js";
 import { indexRouter } from "./routes/indexRouter.js";
 import { authenticationRouter } from "./routes/authenticationRouter.js";
 
 const app = express();
+const PgSession = connectPgSimple(session);
 
 // set EJS as view engine and where to look for the view files
 app.set("views", path.join(import.meta.dirname, "views"));
@@ -13,6 +18,22 @@ app.set("view engine", "ejs");
 // set path of static assets
 const assetsPath = path.join(import.meta.dirname, "public");
 app.use(express.static(assetsPath));
+
+// set up session for passport.js
+app.use(
+  session({
+    store: new PgSession({
+      pool: pool,
+    }),
+    secret: process.env.SECRET,
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+      maxAge: 1000 * 60 * 60 * 24, // 1 day
+    },
+  }),
+);
+app.use(passport.session());
 
 // handles "application/x-www-form-urlencoded" form data and places it into req.body
 app.use(express.urlencoded({ extended: true }));

@@ -2,6 +2,17 @@ import { argv } from "node:process";
 import { Client } from "pg";
 
 const SQL = `
+CREATE TABLE "session" (
+  "sid" varchar NOT NULL COLLATE "default",
+  "sess" json NOT NULL,
+  "expire" timestamp(6) NOT NULL
+)
+WITH (OIDS=FALSE);
+
+ALTER TABLE "session" ADD CONSTRAINT "session_pkey" PRIMARY KEY ("sid") NOT DEFERRABLE INITIALLY IMMEDIATE;
+
+CREATE INDEX "IDX_session_expire" ON "session" ("expire");
+
 CREATE TABLE IF NOT EXISTS users (
   id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
   first_name VARCHAR ( 64 ) NOT NULL,
@@ -19,7 +30,7 @@ CREATE TABLE IF NOT EXISTS messages (
 	author INTEGER REFERENCES USERS ( id )
 );
 
-INSERT INTO users (first_name, last_name, email, password, is_member)
+INSERT INTO users (first_name, last_name, username, password, is_member)
 VALUES
   ('Walter', 'White', 'heisenberg@gmail.com', '1234567', 'true');
 
