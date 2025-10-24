@@ -10,20 +10,17 @@
     <form action="/log-in" method="POST" novalidate>
       <h1>Log In</h1>
       <p>Required fields are followed by a <strong><span aria-label="required" class="required">*</span></strong></p>
+      <span class="error" role="alert" aria-live="polite">
+        <%= locals.errors?.find(error => error.path === 'authentication')?.msg %>
+      </span>
       <section>
         <p>
           <label for="username">Username <strong><span aria-label="required" class="required">*</span></strong></label>
           <input type="username" id="username" name="username" maxlength="255" value="<%= locals.previousValues?.username %>" required>
-          <span class="error" role="alert" aria-live="polite">
-            <%= locals.errors?.find(error => error.path === 'username')?.msg %>
-          </span>
         </p>
         <p>
           <label for="password">Password <strong><span aria-label="required" class="required">*</span></strong></label>
           <input type="password" id="password" name="password" maxlength="255" value="<%= locals.previousValues?.password %>" required>
-          <span class="error" role="alert" aria-live="polite">
-            <%= locals.errors?.find(error => error.path === 'password')?.msg %>
-          </span>
         </p>
       </section>
       <section>

@@ -87,11 +87,6 @@ const validateSignIn = [
     .withMessage(`Passwords ${confirmErr}`),
 ];
 
-const validateLogIn = [
-  body("username").trim().notEmpty().withMessage(`Username ${requiredErr}`),
-  body("password").trim().notEmpty().withMessage(`Password ${requiredErr}`),
-];
-
 const getSignUp = (req, res) => {
   res.render("signUp", {
     title: "Sign Up",
@@ -128,25 +123,30 @@ const getLogIn = (req, res) => {
   });
 };
 
-const postLogIn = [
-  validateLogIn,
-  async (req, res, next) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
+const postLogIn = (req, res, next) => {
+  // create our own authenticate callback to show error message
+  // we immediately invoke this function (IIFE)
+  passport.authenticate("local", (err, user, info) => {
+    if (err) return next(err);
+
+    if (!user) {
       return res.status(400).render("logIn", {
         title: "Log In",
         previousValues: req.body,
-        errors: errors.array(),
+        errors: [
+          {
+            path: "authentication",
+            msg: "The username or password is incorrect",
+          },
+        ],
       });
     }
 
-    // if there are no validation errors, then authenticate
-    next();
-  },
-  passport.authenticate("local", {
-    successRedirect: "/",
-    failureRedirect: "/",
-  }),
-];
+    req.logIn(user, (err) => {
+      if (err) return next(err);
+      return res.redirect("/");
+    });
+  })(req, res, next);
+};
 
 export { getSignUp, postSignUp, getLogIn, postLogIn };
