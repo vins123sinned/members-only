@@ -6,8 +6,13 @@
   <title><%= title %></title>
 </head>
 <body>
-  <h1><%= heading %></h1>
-  <!-- After authentication is implemented, display sign up or log in depending on the relevant situation -->
-  <a href="/sign-up">Sign up</a>
+  <% if (locals.currentUser) { %>
+    <h1>Welcome back, <%= currentUser.first_name %>.</h1>
+
+  <% } else { %>
+    <h1>Welcome to the homepage.</h1>
+    <a href="/log-in">Log In</a>
+    <a href="/sign-up">Sign up</a>
+  <% } %>
 </body>
 </html>

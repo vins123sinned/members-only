@@ -9,7 +9,6 @@ const getHomePage = (req, res) => {
 
   res.render("index", {
     title: "Homepage",
-    heading: "Welcome to the homepage.",
   });
 };
 
