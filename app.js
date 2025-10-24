@@ -38,6 +38,11 @@ app.use(passport.session());
 // handles "application/x-www-form-urlencoded" form data and places it into req.body
 app.use(express.urlencoded({ extended: true }));
 
+app.use((req, res, next) => {
+  res.locals.currentUser = req.user;
+  next();
+});
+
 app.use("/", indexRouter);
 app.use("/", authenticationRouter);
 app.use((err, req, res, next) => {
