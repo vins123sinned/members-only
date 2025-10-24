@@ -1,13 +1,14 @@
 import { Router } from "express";
+import passport from "passport";
+import { Strategy as LocalStrategy } from "passport-local";
+import bcrypt from "bcryptjs";
+import { getUserById, getUserByUsername } from "../db/queries.js";
 import {
   getLogIn,
   getSignUp,
   postLogIn,
   postSignUp,
 } from "../controllers/authenticationController.js";
-import passport from "passport";
-import { Strategy as LocalStrategy } from "passport-local";
-import { getUserById, getUserByUsername } from "../db/queries.js";
 
 const verify = async (username, password, done) => {
   const user = await getUserByUsername(username);
