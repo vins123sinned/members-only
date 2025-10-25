@@ -5,6 +5,7 @@ import bcrypt from "bcryptjs";
 import { getUserById, getUserByUsername } from "../db/queries.js";
 import {
   getLogIn,
+  getLogOut,
   getSignUp,
   postLogIn,
   postSignUp,
@@ -45,5 +46,6 @@ authenticationRouter.get("/sign-up", getSignUp);
 authenticationRouter.post("/sign-up", postSignUp);
 authenticationRouter.get("/log-in", getLogIn);
 authenticationRouter.post("/log-in", postLogIn);
+authenticationRouter.get("/log-out", getLogOut);
 
 export { authenticationRouter };

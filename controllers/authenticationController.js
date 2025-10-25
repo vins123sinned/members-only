@@ -149,4 +149,11 @@ const postLogIn = (req, res, next) => {
   })(req, res, next);
 };
 
-export { getSignUp, postSignUp, getLogIn, postLogIn };
+const getLogOut = (req, res, next) => {
+  req.logout((err) => {
+    if (err) return next(err);
+    res.redirect("/");
+  });
+};
+
+export { getSignUp, postSignUp, getLogIn, postLogIn, getLogOut };
