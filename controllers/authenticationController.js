@@ -2,11 +2,9 @@ import passport from "passport";
 import bcrypt from "bcryptjs";
 import { body, validationResult, matchedData } from "express-validator";
 import { insertUser } from "../db/queries.js";
+import { lengthErr, requiredErr } from "../utils.js";
 
-const requiredErr = "is required";
 const alphaErr = "must only contain letters";
-const lengthErr = (maxLength, minLength = 1) =>
-  `must be between ${minLength} and ${maxLength} characters`;
 const usernameErr = "must not contain any special characters";
 const emailErr = "must be a valid email address";
 const passwordErr =
