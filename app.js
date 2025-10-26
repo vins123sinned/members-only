@@ -49,7 +49,10 @@ app.use("/", authenticationRouter);
 app.use("/membership", membershipRouter);
 app.use((err, req, res, next) => {
   console.error(err);
-  res.status(err.statusCode || 500).send(err);
+  res.status(err.statusCode || 500).render("error", {
+    title: "Error",
+    message: err.message,
+  });
 });
 
 const PORT = process.env.PORT || 3000;
