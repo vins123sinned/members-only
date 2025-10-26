@@ -1,5 +1,6 @@
 import { body, matchedData, validationResult } from "express-validator";
 import { lengthErr, requiredErr } from "../utils.js";
+import { updateMemberStatus } from "../db/queries.js";
 
 const validateMemberForm = [
   body("answer")
@@ -12,6 +13,7 @@ const validateMemberForm = [
 ];
 
 const getMemberForm = (req, res) => {
+  // make sure user exists
   res.render("membershipForm", {
     title: "Become a Member",
   });
@@ -19,7 +21,7 @@ const getMemberForm = (req, res) => {
 
 const postMemberForm = [
   validateMemberForm,
-  async (req, res) => {
+  async (req, res, next) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).render("membershipForm", {
@@ -34,7 +36,13 @@ const postMemberForm = [
       answer.toLowerCase() === "footstep" ||
       answer.toLowerCase() === "footsteps"
     ) {
-      // update membership status and move
+      try {
+        await updateMemberStatus(res.locals.currentUser.id);
+        res.redirect("/");
+      } catch (err) {
+        console.log(err);
+        next(err);
+      }
     } else {
       return res.status(400).render("membershipForm", {
         title: "Become a Member",
