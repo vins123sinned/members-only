@@ -1,6 +1,7 @@
 import { body, matchedData, validationResult } from "express-validator";
 import { lengthErr, requiredErr } from "../utils.js";
 import { updateMemberStatus } from "../db/queries.js";
+import { CustomNotFoundError } from "../errors/CustomNotFoundError.js";
 
 const validateMemberForm = [
   body("answer")
@@ -12,11 +13,14 @@ const validateMemberForm = [
     .withMessage(`Answer ${lengthErr(25)}`),
 ];
 
-const getMemberForm = (req, res) => {
-  // make sure user exists
-  res.render("membershipForm", {
-    title: "Become a Member",
-  });
+const getMemberForm = (req, res, next) => {
+  if (res.locals.currentUser) {
+    res.render("membershipForm", {
+      title: "Become a Member",
+    });
+  } else {
+    next(new Error("You must be logged in in order to access this page"));
+  }
 };
 
 const postMemberForm = [
