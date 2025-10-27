@@ -1,8 +1,9 @@
 import { body, matchedData, validationResult } from "express-validator";
 import { lengthErr, requiredErr } from "../utils.js";
-import { updateMemberStatus } from "../db/queries.js";
+import { updateAdminStatus, updateMemberStatus } from "../db/queries.js";
 
-const validateMemberForm = [
+// currently this validation works for both the member and admin form
+const validateMembershipForm = [
   body("answer")
     .trim()
     .notEmpty()
@@ -23,7 +24,7 @@ const getMemberForm = (req, res, next) => {
 };
 
 const postMemberForm = [
-  validateMemberForm,
+  validateMembershipForm,
   async (req, res, next) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -61,4 +62,53 @@ const postMemberForm = [
   },
 ];
 
-export { getMemberForm, postMemberForm };
+const getAdminForm = (req, res, next) => {
+  if (res.locals.currentUser) {
+    res.render("adminForm", {
+      title: "Become an Admin",
+    });
+  } else {
+    next(new Error("You must be logged in in order to access this page"));
+  }
+};
+
+const postAdminForm = [
+  validateMembershipForm,
+  async (req, res, next) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).render("adminForm", {
+        title: "Become a Member",
+        previousValues: req.body,
+        errors: errors.array(),
+      });
+    }
+
+    const { answer } = matchedData(req);
+    if (
+      answer.toLowerCase() === "moderator" ||
+      answer.toLowerCase() === "admin"
+    ) {
+      try {
+        await updateAdminStatus(res.locals.currentUser.id);
+        res.redirect("/");
+      } catch (err) {
+        console.log(err);
+        next(err);
+      }
+    } else {
+      return res.status(400).render("adminForm", {
+        title: "Become an Admin",
+        previousValues: req.body,
+        errors: [
+          {
+            path: "answer",
+            msg: "Answer is incorrect. Please try again.",
+          },
+        ],
+      });
+    }
+  },
+];
+
+export { getMemberForm, postMemberForm, getAdminForm, postAdminForm };
