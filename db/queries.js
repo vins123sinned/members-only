@@ -27,4 +27,17 @@ const updateMemberStatus = async (id) => {
   await pool.query("UPDATE users SET is_member = TRUE WHERE id = $1", [id]);
 };
 
-export { getUserByUsername, getUserById, insertUser, updateMemberStatus };
+const insertMessage = async (title, text, authorId) => {
+  await pool.query(
+    "INSERT INTO messages (title, text, author) VALUES ($1, $2, $3)",
+    [title, text, authorId],
+  );
+};
+
+export {
+  getUserByUsername,
+  getUserById,
+  insertUser,
+  updateMemberStatus,
+  insertMessage,
+};

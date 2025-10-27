@@ -1,5 +1,6 @@
 import { body, matchedData, validationResult } from "express-validator";
 import { lengthErr, requiredErr } from "../utils.js";
+import { insertMessage } from "../db/queries.js";
 
 const validateMessageForm = [
   body("title")
@@ -42,7 +43,8 @@ const postMessageForm = [
 
     const { title, text } = matchedData(req);
     try {
-      // add new message
+      const authorId = res.locals.currentUser.id;
+      await insertMessage(title, text, authorId);
       res.redirect("/");
     } catch (err) {
       console.log(err);
