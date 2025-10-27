@@ -1,7 +1,6 @@
 import { body, matchedData, validationResult } from "express-validator";
 import { lengthErr, requiredErr } from "../utils.js";
 import { updateMemberStatus } from "../db/queries.js";
-import { CustomNotFoundError } from "../errors/CustomNotFoundError.js";
 
 const validateMemberForm = [
   body("answer")
