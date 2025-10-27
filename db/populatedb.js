@@ -19,7 +19,8 @@ CREATE TABLE IF NOT EXISTS users (
   last_name VARCHAR ( 64 ),
   username VARCHAR ( 255 ) NOT NULL,
   password VARCHAR ( 255 ) NOT NULL,
-  is_member BOOLEAN DEFAULT FALSE
+  is_member BOOLEAN DEFAULT FALSE,
+  is_admin BOOLEAN DEFAULT FALSE
 );
 
 CREATE TABLE IF NOT EXISTS messages (
