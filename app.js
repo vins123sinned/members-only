@@ -8,6 +8,7 @@ import { pool } from "./db/pool.js";
 import { indexRouter } from "./routes/indexRouter.js";
 import { authenticationRouter } from "./routes/authenticationRouter.js";
 import { membershipRouter } from "./routes/membershipRouter.js";
+import { messageRouter } from "./routes/messageRouter.js";
 
 const app = express();
 const PgSession = connectPgSimple(session);
@@ -47,6 +48,7 @@ app.use((req, res, next) => {
 app.use("/", indexRouter);
 app.use("/", authenticationRouter);
 app.use("/membership", membershipRouter);
+app.use("/messages", messageRouter);
 app.use((err, req, res, next) => {
   console.error(err);
   res.status(err.statusCode || 500).render("error", {
