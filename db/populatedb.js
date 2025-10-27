@@ -1,6 +1,7 @@
 import { argv } from "node:process";
 import { Client } from "pg";
 
+// remove initial users and messages to deal with bcrypt password hashes
 const SQL = `
 CREATE TABLE "session" (
   "sid" varchar NOT NULL COLLATE "default",
@@ -30,14 +31,6 @@ CREATE TABLE IF NOT EXISTS messages (
 	timestamp DATE DEFAULT CURRENT_DATE,
 	author INTEGER REFERENCES USERS ( id )
 );
-
-INSERT INTO users (first_name, last_name, username, password, is_member)
-VALUES
-  ('Walter', 'White', 'heisenberg@gmail.com', '1234567', 'true');
-
-INSERT INTO messages (title, text, author)
-VALUES
- ('My easy riddle', 'What has one voice but goes on four legs in the morning, two in the afternoon, and three in the evening?', 1);
 `;
 
 const main = async () => {

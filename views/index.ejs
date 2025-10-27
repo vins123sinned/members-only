@@ -12,7 +12,12 @@
       <p>You are a member!</p>
     <% } else { %>
       <p>You are not a member. <a href="/membership/member">Become one today.</a></p>
-    <%} %>
+    <% } %>
+    <% if (locals.currentUser.is_admin) { %>
+      <p>You are an admin!</p>
+    <% } else { %>
+      <p>You are not an admin. <a href="/membership/admin">Do you have what it takes to be one today?</a></p>
+    <% } %>
     <a href="/messages/create">Create a new message</a>
     <a href="/log-out">Log Out</a>
   <% } else { %>
@@ -21,16 +26,20 @@
     <a href="/sign-up">Sign up</a>
   <% } %>
   <section class="messages">
-    <% messages.forEach((message) => { %>
-      <article class="message">
-        <header>
-          <p><%= locals.currentUser ? message.author : "anonymous" %></p>
-          <p><%= locals.currentUser ? message.timestamp : "when it was written..." %></p>
-        </header>
-        <h2><%= message.title %></h2>
-        <p><%= message.text %></p>
-      </article>
-    <% }) %>
+    <% if (messages.length > 0) { %>
+      <% messages.forEach((message) => { %>
+        <article class="message">
+          <header>
+            <p><%= locals.currentUser?.is_member ? message.author : "anonymous" %></p>
+            <p><%= locals.currentUser?.is_member ? message.timestamp : "when it was written..." %></p>
+          </header>
+          <h2><%= message.title %></h2>
+          <p><%= message.text %></p>
+        </article>
+      <% }) %>
+    <% } else { %>
+      <p>There are currently no messages.</p>
+    <% } %>
   </section>
 </body>
 </html>
