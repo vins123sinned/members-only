@@ -27,6 +27,11 @@ const updateMemberStatus = async (id) => {
   await pool.query("UPDATE users SET is_member = TRUE WHERE id = $1", [id]);
 };
 
+const getAllMessages = async () => {
+  const { rows } = await pool.query("SELECT * FROM messages");
+  return rows;
+};
+
 const insertMessage = async (title, text, authorId) => {
   await pool.query(
     "INSERT INTO messages (title, text, author) VALUES ($1, $2, $3)",
@@ -39,5 +44,6 @@ export {
   getUserById,
   insertUser,
   updateMemberStatus,
+  getAllMessages,
   insertMessage,
 };
