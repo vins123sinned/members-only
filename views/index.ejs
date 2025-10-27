@@ -20,5 +20,17 @@
     <a href="/log-in">Log In</a>
     <a href="/sign-up">Sign up</a>
   <% } %>
+  <section class="messages">
+    <% messages.forEach((message) => { %>
+      <article class="message">
+        <header>
+          <p><%= locals.currentUser ? message.author : "anonymous" %></p>
+          <p><%= locals.currentUser ? message.timestamp : "when it was written..." %></p>
+        </header>
+        <h2><%= message.title %></h2>
+        <p><%= message.text %></p>
+      </article>
+    <% }) %>
+  </section>
 </body>
 </html>
