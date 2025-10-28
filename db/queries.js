@@ -8,10 +8,10 @@ const getUserByUsername = async (username) => {
   return rows[0];
 };
 
-const getUserById = async (id) => {
+const getUserById = async (userId) => {
   const { rows } = await pool.query(
     "SELECT * FROM users WHERE id = $1 LIMIT 1",
-    [id],
+    [userId],
   );
   return rows[0];
 };
@@ -23,12 +23,12 @@ const insertUser = async (first_name, last_name, username, password) => {
   );
 };
 
-const updateMemberStatus = async (id) => {
-  await pool.query("UPDATE users SET is_member = TRUE WHERE id = $1", [id]);
+const updateMemberStatus = async (userId) => {
+  await pool.query("UPDATE users SET is_member = TRUE WHERE id = $1", [userId]);
 };
 
-const updateAdminStatus = async (id) => {
-  await pool.query("UPDATE users SET is_admin = TRUE where id = $1", [id]);
+const updateAdminStatus = async (userId) => {
+  await pool.query("UPDATE users SET is_admin = TRUE where id = $1", [userId]);
 };
 
 const getAllMessages = async () => {
@@ -43,6 +43,10 @@ const insertMessage = async (title, text, authorId) => {
   );
 };
 
+const deleteMessage = async (messageId) => {
+  await pool.query("DELETE FROM messages WHERE id = $1", [messageId]);
+};
+
 export {
   getUserByUsername,
   getUserById,
@@ -51,4 +55,5 @@ export {
   updateAdminStatus,
   getAllMessages,
   insertMessage,
+  deleteMessage,
 };
