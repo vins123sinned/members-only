@@ -1,6 +1,6 @@
 import { body, matchedData, validationResult } from "express-validator";
 import { lengthErr, requiredErr } from "../utils.js";
-import { insertMessage } from "../db/queries.js";
+import { deleteMessage, insertMessage } from "../db/queries.js";
 
 const validateMessageForm = [
   body("title")
@@ -53,4 +53,19 @@ const postMessageForm = [
   },
 ];
 
-export { getMessageForm, postMessageForm };
+const postMessageDelete = async (req, res) => {
+  if (res.locals.currentUser?.is_admin) {
+    const { messageId } = req.params;
+    try {
+      await deleteMessage(messageId);
+      res.redirect("/");
+    } catch (err) {
+      console.log(err);
+      next(err);
+    }
+  } else {
+    next(new Error("You are not authorized to complete this action"));
+  }
+};
+
+export { getMessageForm, postMessageForm, postMessageDelete };
