@@ -4,6 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title><%= title %></title>
+  <script src="messageDelete.js" defer></script>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <% if (locals.currentUser) { %>
@@ -32,6 +34,9 @@
           <header>
             <p><%= locals.currentUser?.is_member ? message.author : "anonymous" %></p>
             <p><%= locals.currentUser?.is_member ? message.timestamp : "when it was written..." %></p>
+            <% if (locals.currentUser?.is_admin) { %>
+              <button class="delete-button" data-id="<%= message.id %>">Delete</a>
+            <% } %>
           </header>
           <h2><%= message.title %></h2>
           <p><%= message.text %></p>
@@ -40,6 +45,16 @@
     <% } else { %>
       <p>There are currently no messages.</p>
     <% } %>
+  </section>
+  <section class="delete-confirmation-section hidden">
+    <form method="POST" class="delete-confirmation-form">
+      <h1>Are you sure?</h1>
+      <p>Deleting is PERMANENT, so be careful before deleting!</p>
+      <section>
+        <button type="button" class="form-cancel-button">Cancel</button>
+        <button type="submit" class="form-delete-button">Delete</button>
+      </section>
+    </form>
   </section>
 </body>
 </html>
