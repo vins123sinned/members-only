@@ -8,12 +8,13 @@ const getHomePage = async (req, res) => {
     throw new CustomNotFoundError("Index page not found");
   }
 
+  // return messages array with author's name instead of id
   const messages = await getAllMessages();
-  // return messages array with author's first name instead of id
   const mappedMessages = await Promise.all(
     messages.map(async (message) => {
-      const user = await getUserById(message.id);
-      message.author = user.first_name;
+      console.log(message);
+      const user = await getUserById(message.author);
+      message.author = `${user.first_name} ${user.last_name}`;
       return message;
     }),
   );
