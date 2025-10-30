@@ -1,7 +1,7 @@
 import passport from "passport";
 import bcrypt from "bcryptjs";
 import { body, validationResult, matchedData } from "express-validator";
-import { insertUser } from "../db/queries.js";
+import { getUserByUsername, insertUser } from "../db/queries.js";
 import { lengthErr, requiredErr } from "../utils.js";
 
 const alphaErr = "must only contain letters";
@@ -9,6 +9,7 @@ const usernameErr = "must not contain any special characters";
 const emailErr = "must be a valid email address";
 const passwordErr =
   "must include a letter, number, and special character (!@$%^&*+#)";
+const takenErr = "is already taken";
 const confirmErr = "do not match";
 
 const validateSignIn = [
@@ -32,7 +33,6 @@ const validateSignIn = [
     .bail()
     .isAlpha()
     .withMessage(`Last name ${alphaErr}`),
-  // could also add a check for existing username
   body("username")
     .trim()
     .notEmpty()
@@ -40,6 +40,15 @@ const validateSignIn = [
     .bail()
     .isLength({ min: 3, max: 64 })
     .withMessage(`Username ${lengthErr(255, 3)}`)
+    .bail()
+    .custom(async (value) => {
+      // checks if username is already in the database
+      const user = await getUserByUsername(value);
+
+      if (user) throw new Error("Existing username in database");
+      return true;
+    })
+    .withMessage(`Username ${takenErr}`)
     .bail()
     .custom((value) => {
       // must be a valid username (letters, numbers, dots and underscores only)

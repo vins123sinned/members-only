@@ -1,8 +1,9 @@
 import { pool } from "./pool.js";
 
 const getUserByUsername = async (username) => {
+  // get username case-insensitive(ly)
   const { rows } = await pool.query(
-    "SELECT * FROM users WHERE username = $1 LIMIT 1",
+    "SELECT * FROM users WHERE username ILIKE $1 LIMIT 1",
     [username],
   );
   return rows[0];
