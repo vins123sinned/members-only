@@ -14,13 +14,16 @@ const validateMembershipForm = [
 ];
 
 const getMemberForm = (req, res, next) => {
-  if (res.locals.currentUser) {
-    res.render("membershipForm", {
-      title: "Become a Member",
-    });
-  } else {
-    next(new Error("You must be logged in in order to access this page"));
-  }
+  if (!res.locals.currentUser)
+    return next(
+      new Error("You must be logged in in order to access this page"),
+    );
+  if (res.locals.currentUser.is_member)
+    return next(new Error("You are already a member"));
+
+  res.render("membershipForm", {
+    title: "Become a Member",
+  });
 };
 
 const postMemberForm = [
@@ -63,13 +66,16 @@ const postMemberForm = [
 ];
 
 const getAdminForm = (req, res, next) => {
-  if (res.locals.currentUser) {
-    res.render("adminForm", {
-      title: "Become an Admin",
-    });
-  } else {
-    next(new Error("You must be logged in in order to access this page"));
-  }
+  if (!res.locals.currentUser)
+    return next(
+      new Error("You must be logged in in order to access this page"),
+    );
+  if (res.locals.currentUser.is_admin)
+    return next(new Error("You are already an admin"));
+
+  res.render("adminForm", {
+    title: "Become an Admin",
+  });
 };
 
 const postAdminForm = [
