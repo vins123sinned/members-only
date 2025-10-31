@@ -12,9 +12,8 @@ const getHomePage = async (req, res) => {
   const messages = await getAllMessages();
   const mappedMessages = await Promise.all(
     messages.map(async (message) => {
-      console.log(message);
       const user = await getUserById(message.author);
-      message.author = `${user.first_name} ${user.last_name}`;
+      message.authorName = `${user.first_name} ${user.last_name}`;
       return message;
     }),
   );

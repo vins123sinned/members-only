@@ -32,8 +32,8 @@
       <% messages.forEach((message) => { %>
         <article class="message">
           <header>
-            <p><%= locals.currentUser?.is_member ? message.author : "anonymous" %></p>
-            <p><%= locals.currentUser?.is_member ? message.timestamp : "when it was written..." %></p>
+            <p><%= locals.currentUser?.is_member || (locals.currentUser?.id === message.author) ? message.authorName : "anonymous" %></p>
+            <p><%= locals.currentUser?.is_member || (locals.currentUser?.id === message.author) ? message.timestamp : "when it was written..." %></p>
             <% if (locals.currentUser?.is_admin) { %>
               <button class="delete-button" data-id="<%= message.id %>">Delete</a>
             <% } %>
