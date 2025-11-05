@@ -42,14 +42,14 @@ header a {
   display: none;
 }
 
-.membership-links a {
-  margin-right: 1.5rem;
+.membership-links a:not(:last-child) {
+  margin-right: clamp(1.5rem, 4vw, 2.5rem);
 }
 
 .profile-picture {
   width: auto;
   height: 2.5rem;
-  margin: 0 1rem;
+  margin: 0 clamp(1rem, 4vw, 2rem);
 }
 
 .profile-picture:hover,
@@ -97,8 +97,18 @@ header a {
 }
 
 .menu-dropdown a {
-  display: block;
+  display: flex;
+  align-items: center;
   padding: 0.5rem;
+}
+
+.header-link {
+  display: flex;
+  align-items: center;
+}
+
+.header-link .material-symbols-outlined {
+  margin-right: 0.25rem;
 }
 
 .hidden {
@@ -107,7 +117,7 @@ header a {
 
 @media (min-width: 600px) {
   .right-section .membership-links {
-    display: block;
+    display: flex;
   }
 
   .right-section .menu-container {
