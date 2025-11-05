@@ -2,12 +2,6 @@ import { getAllMessages, getUserById } from "../db/queries.js";
 import { CustomNotFoundError } from "../errors/CustomNotFoundError.js";
 
 const getHomePage = async (req, res) => {
-  // just to showcase error functionality
-  const indexPage = true;
-  if (!indexPage) {
-    throw new CustomNotFoundError("Index page not found");
-  }
-
   // return messages array with author's name instead of id
   const messages = await getAllMessages();
   const mappedMessages = await Promise.all(
@@ -18,8 +12,9 @@ const getHomePage = async (req, res) => {
     }),
   );
 
-  res.render("index", {
+  res.render("layout", {
     title: "Homepage",
+    path: "partials/homepage.ejs",
     messages: mappedMessages,
   });
 };
