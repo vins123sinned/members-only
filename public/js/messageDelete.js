@@ -19,3 +19,5 @@ formCancelButton.addEventListener("click", () => {
   deleteConfirmationSection.classList.add("hidden");
   deleteConfirmationForm.removeAttribute("action");
 });
+
+// MOVE THIS TO THE JS FOLDER LATER
