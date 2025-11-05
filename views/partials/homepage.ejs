@@ -21,17 +21,18 @@
     <% } %>
   </section>
   <section class="messages-section">
+    <h2>Messages</h2>
     <% if (messages.length > 0) { %>
       <% messages.forEach((message) => { %>
         <article class="message">
-          <header>
-            <p><%= locals.currentUser?.is_member || (locals.currentUser?.id === message.author) ? message.authorName : "anonymous" %></p>
+          <header class="message-header">
+            <p class="username"><%= locals.currentUser?.is_member || (locals.currentUser?.id === message.author) ? message.authorName : "anonymous" %></p>
             <p><%= locals.currentUser?.is_member || (locals.currentUser?.id === message.author) ? message.timestamp : "when it was written..." %></p>
             <% if (locals.currentUser?.is_admin) { %>
               <button class="delete-button" data-id="<%= message.id %>">Delete</a>
             <% } %>
           </header>
-          <h2><%= message.title %></h2>
+          <h3><%= message.title %></h3>
           <p><%= message.text %></p>
         </article>
       <% }) %>

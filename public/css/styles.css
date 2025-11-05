@@ -9,7 +9,7 @@
 
 :root {
   --header-color: #d7e1a6;
-  --border-color: #d4cbb8;
+  --border-color: #e2e2e2;
 }
 
 *,
@@ -32,6 +32,14 @@ body {
     "Helvetica Neue",
     sans-serif;
   background-color: #fefefd;
+  padding: 0;
+  margin: 0;
+}
+
+h1,
+h2,
+h3,
+p {
   padding: 0;
   margin: 0;
 }

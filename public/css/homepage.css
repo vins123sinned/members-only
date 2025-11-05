@@ -1,5 +1,62 @@
 main {
   display: grid;
-  padding: 0 2rem;
+  grid-template-columns: 1fr;
+  padding: 0 1rem;
   margin-top: -8rem;
+}
+
+main section {
+  background-color: #fff;
+  border: 1px solid var(--border-color);
+  border-radius: 15px;
+  padding: 1.25rem;
+  margin-bottom: 1rem;
+}
+
+.welcome-section h1 {
+  margin-bottom: 1.5rem;
+}
+
+.welcome-section a {
+  font-weight: 500;
+  text-decoration: none;
+  color: inherit;
+  background-color: #f5ffca;
+  border: 1px solid var(--border-color);
+  border-radius: 5px;
+  padding: 0.5rem;
+}
+
+.welcome-section a:first-of-type {
+  margin-right: 0.5rem;
+}
+
+.welcome-section a:hover {
+  background-color: #f8ffdd;
+}
+
+.messages-section h2 {
+  margin-bottom: 1rem;
+}
+
+.message {
+  background-color: #fff;
+  border: 1px solid var(--border-color);
+  border-radius: 5px;
+  line-height: 1.5;
+  padding: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.message-header {
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 0.25rem;
+}
+
+.message h3 {
+  margin: 1rem 0;
+}
+
+.message-header * {
+  color: #636363;
 }

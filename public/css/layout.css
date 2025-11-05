@@ -8,7 +8,7 @@
   min-height: 15rem;
 }
 
-header {
+.main-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -17,7 +17,7 @@ header {
   border-bottom: 1px solid var(--border-color);
 }
 
-header a {
+.main-header a {
   text-decoration: none;
   color: inherit;
 }
