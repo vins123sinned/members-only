@@ -1,7 +1,7 @@
 main {
   display: grid;
   grid-template-columns: 1fr;
-  padding: 0 1rem;
+  padding: 0 clamp(1rem, 5vw, 5rem);
   margin-top: -8rem;
 }
 
@@ -17,7 +17,8 @@ main section {
   margin-bottom: 1.5rem;
 }
 
-.welcome-section a {
+.welcome-section .button-link {
+  display: inline-block;
   font-weight: 500;
   text-decoration: none;
   color: inherit;
@@ -25,14 +26,36 @@ main section {
   border: 1px solid var(--border-color);
   border-radius: 5px;
   padding: 0.5rem;
+  transition: transform 0.1s ease;
 }
 
-.welcome-section a:first-of-type {
+.welcome-section .button-link:active {
+  transform: scale(0.95);
+}
+
+.welcome-section .button-link:first-of-type {
   margin-right: 0.5rem;
 }
 
-.welcome-section a:hover {
+.welcome-section .button-link:hover {
   background-color: #f8ffdd;
+}
+
+.membership-status {
+  line-height: 1.5;
+  margin-bottom: 1rem;
+}
+
+.membership-status a {
+  color: #386641;
+}
+
+.membership-status a:hover {
+  color: #61a26e;
+}
+
+.membership-status p:not(:last-of-type) {
+  margin-bottom: 0.25rem;
 }
 
 .messages-section h2 {
