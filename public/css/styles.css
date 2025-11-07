@@ -36,6 +36,10 @@ body {
   margin: 0;
 }
 
+body:has(.overlay:not(.hidden)) {
+  overflow: hidden;
+}
+
 h1,
 h2,
 h3,
@@ -48,4 +52,8 @@ ul {
   list-style-type: none;
   padding: 0;
   margin: 0;
+}
+
+.hidden {
+  display: none;
 }

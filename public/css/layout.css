@@ -111,10 +111,6 @@
   margin-right: 0.25rem;
 }
 
-.hidden {
-  display: none;
-}
-
 @media (min-width: 600px) {
   .right-section .membership-links {
     display: flex;
