@@ -22,3 +22,18 @@ formCancelButton.addEventListener("click", () => {
   overlay.classList.add("hidden");
   deleteConfirmationForm.removeAttribute("action");
 });
+
+// delete confirmation currently overrides the overlay!
+document.addEventListener("click", (event) => {
+  if (overlay.classList.contains("hidden")) return;
+
+  // if we are clicking anywhere OTHER than the delete confirmation
+  if (
+    !deleteConfirmationForm.contains(event.target) &&
+    event.target.className !== "delete-button"
+  ) {
+    deleteConfirmationSection.classList.add("hidden");
+    overlay.classList.add("hidden");
+    deleteConfirmationForm.removeAttribute("action");
+  }
+});
