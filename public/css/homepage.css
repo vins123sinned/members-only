@@ -192,9 +192,36 @@ main section:not(.delete-confirmation-section, .delete-confirmation-buttons) {
   margin-bottom: 1rem;
 }
 
-.advertisement-section img {
+.users-online a {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: inherit;
+  padding: 0.5rem 0.25rem;
+}
+
+.users-online .user-link:hover {
+  background-color: #f1f1f1;
   border-radius: 5px;
-  width: 100%;
+}
+
+.users-online img {
+  border-radius: 50%;
+  object-fit: cover;
+  width: 2.5rem;
+  height: 2.5rem;
+  margin-right: 0.5rem;
+}
+
+.users-online .see-more:hover {
+  text-decoration: underline;
+}
+
+.advertisement-section img {
+  display: block;
+  border-radius: 5px;
+  max-height: 25rem;
+  margin: auto;
 }
 
 .advertisement-section img:hover {
