@@ -183,3 +183,44 @@ main section:not(.delete-confirmation-section, .delete-confirmation-buttons) {
 .delete-confirmation-buttons button:active {
   transform: scale(0.95);
 }
+
+.sidebar {
+  display: none;
+}
+
+.advertisement-section h3 {
+  margin-bottom: 1rem;
+}
+
+.advertisement-section img {
+  border-radius: 5px;
+  width: 100%;
+}
+
+.advertisement-section img:hover {
+  cursor: pointer;
+}
+
+@media (min-width: 1000px) {
+  main {
+    grid-template-columns: 3fr 1fr;
+    grid-template-areas:
+      "welcome sidebar"
+      "messages sidebar";
+    gap: clamp(1rem, 2vw, 2.5rem);
+  }
+
+  .welcome-section {
+    grid-area: welcome;
+    margin-bottom: 0 !important;
+  }
+
+  .messages-section {
+    grid-area: messages;
+  }
+
+  .sidebar {
+    grid-area: sidebar;
+    display: block;
+  }
+}
