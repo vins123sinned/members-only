@@ -13,7 +13,7 @@ const validateMembershipForm = [
     .withMessage(`Answer ${lengthErr(25)}`),
 ];
 
-const getMemberForm = (req, res, next) => {
+const getMemberForm = (req, res) => {
   if (!res.locals.currentUser) return res.redirect("/log-in");
   if (res.locals.currentUser.is_member)
     return res.render("layout", {
@@ -67,7 +67,7 @@ const postMemberForm = [
   },
 ];
 
-const getAdminForm = (req, res, next) => {
+const getAdminForm = (req, res) => {
   if (!res.locals.currentUser) return res.redirect("/log-in");
   if (res.locals.currentUser.is_admin)
     return res.render("layout", {

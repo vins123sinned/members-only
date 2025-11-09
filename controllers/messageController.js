@@ -1,6 +1,7 @@
 import { body, matchedData, validationResult } from "express-validator";
 import { lengthErr, requiredErr } from "../utils.js";
 import { deleteMessage, insertMessage } from "../db/queries.js";
+import { ForbiddenError } from "../errors/ForbiddenError.js";
 
 const validateMessageForm = [
   body("title")
@@ -51,9 +52,12 @@ const postMessageForm = [
   },
 ];
 
-const postMessageDelete = async (req, res) => {
+const postMessageDelete = async (req, res, next) => {
+  if (!res.locals.currentUser) return res.redirect("/log-in");
   if (!res.locals.currentUser?.is_admin)
-    return next(new Error("You are forbidden to complete this action"));
+    return next(
+      new ForbiddenError("You must be an admin to complete this action!"),
+    );
 
   const { messageId } = req.params;
   try {
