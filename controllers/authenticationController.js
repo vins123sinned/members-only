@@ -95,6 +95,8 @@ const validateSignIn = [
 ];
 
 const getSignUp = (req, res) => {
+  if (res.locals.currentUser) return res.redirect("/");
+
   res.render("signUp", {
     title: "Sign Up",
   });

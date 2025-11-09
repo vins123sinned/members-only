@@ -1,5 +1,4 @@
 import { getAllMessages, getUserById } from "../db/queries.js";
-import { CustomNotFoundError } from "../errors/CustomNotFoundError.js";
 
 const getHomePage = async (req, res) => {
   // return messages array with author's name instead of id

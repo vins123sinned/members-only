@@ -1,7 +1,6 @@
 import { body, matchedData, validationResult } from "express-validator";
 import { lengthErr, requiredErr } from "../utils.js";
 import { deleteMessage, insertMessage } from "../db/queries.js";
-import { UnauthorizedError } from "../errors/unauthorizedError.js";
 
 const validateMessageForm = [
   body("title")
@@ -21,15 +20,11 @@ const validateMessageForm = [
 ];
 
 const getMessageForm = (req, res, next) => {
-  if (res.locals.currentUser) {
-    res.render("messageForm", {
-      title: "Create a New Message",
-    });
-  } else {
-    next(
-      new UnauthorizedError("You must be logged in order to access this page!"),
-    );
-  }
+  if (!res.locals.currentUser) return res.redirect("/log-in");
+
+  res.render("messageForm", {
+    title: "Create a New Message",
+  });
 };
 
 const postMessageForm = [
@@ -57,17 +52,16 @@ const postMessageForm = [
 ];
 
 const postMessageDelete = async (req, res) => {
-  if (res.locals.currentUser?.is_admin) {
-    const { messageId } = req.params;
-    try {
-      await deleteMessage(messageId);
-      res.redirect("/");
-    } catch (err) {
-      console.log(err);
-      next(err);
-    }
-  } else {
-    next(new Error("You are not authorized to complete this action"));
+  if (!res.locals.currentUser?.is_admin)
+    return next(new Error("You are forbidden to complete this action"));
+
+  const { messageId } = req.params;
+  try {
+    await deleteMessage(messageId);
+    res.redirect("/");
+  } catch (err) {
+    console.log(err);
+    next(err);
   }
 };
 
