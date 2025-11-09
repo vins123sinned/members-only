@@ -1,12 +1,6 @@
 import { getAllMessages, getUserById } from "../db/queries.js";
 
-import { ForbiddenError } from "../errors/ForbiddenError.js";
-
 const getHomePage = async (req, res, next) => {
-  return next(
-    new ForbiddenError("You must be an admin to complete this action!"),
-  );
-
   // return messages array with author's name instead of id
   const messages = await getAllMessages();
   const mappedMessages = await Promise.all(
