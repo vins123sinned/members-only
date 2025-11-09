@@ -19,7 +19,12 @@ const getMemberForm = (req, res, next) => {
       new Error("You must be logged in in order to access this page"),
     );
   if (res.locals.currentUser.is_member)
-    return next(new Error("You are already a member"));
+    return res.render("layout", {
+      title: "Become a Member",
+      path: "partials/thankYou.ejs",
+      heading: "Thank you for being a member!",
+      body: "As a member, you will be able to see the name and date of other messages!",
+    });
 
   res.render("membershipForm", {
     title: "Become a Member",
@@ -71,7 +76,12 @@ const getAdminForm = (req, res, next) => {
       new Error("You must be logged in in order to access this page"),
     );
   if (res.locals.currentUser.is_admin)
-    return next(new Error("You are already an admin"));
+    return res.render("layout", {
+      title: "Become an Admin",
+      path: "partials/thankYou.ejs",
+      heading: "Thank you for being an admin!",
+      body: "As an admin, you will be able to moderate and delete any inappropriate messages!",
+    });
 
   res.render("adminForm", {
     title: "Become an Admin",

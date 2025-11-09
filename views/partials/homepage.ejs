@@ -1,96 +1,94 @@
-<main>
-  <section class="welcome-section">
-    <% if (locals.currentUser) { %>
-      <h1>Welcome back, <%= currentUser.first_name %>.</h1>
-      <div class="membership-status">
-        <% if (locals.currentUser.is_member) { %>
-          <p>You are a member!</p>
-        <% } else { %>
-          <p>You are not a member. <a href="/membership/member">Become one today.</a></p>
-        <% } %>
-        <% if (locals.currentUser.is_admin) { %>
-          <p>You are an admin!</p>
-        <% } else { %>
-          <p>You are not an admin. <a href="/membership/admin">Do you have what it takes to be one today?</a></p>
-        <% } %>
-      </div>
-      <a href="/messages/create" class="button-link">Create a new message</a>
-      <a href="/log-out" class="button-link">Log Out</a>
-    <% } else { %>
-      <h1>Welcome to the homepage.</h1>
-      <a href="/log-in" class="button-link">Log In</a>
-      <a href="/sign-up" class="button-link">Sign up</a>
-    <% } %>
+<section class="welcome-section">
+  <% if (locals.currentUser) { %>
+    <h1>Welcome back, <%= currentUser.first_name %>.</h1>
+    <div class="membership-status">
+      <% if (locals.currentUser.is_member) { %>
+        <p>You are a member!</p>
+      <% } else { %>
+        <p>You are not a member. <a href="/membership/member">Become one today.</a></p>
+      <% } %>
+      <% if (locals.currentUser.is_admin) { %>
+        <p>You are an admin!</p>
+      <% } else { %>
+        <p>You are not an admin. <a href="/membership/admin">Do you have what it takes to be one today?</a></p>
+      <% } %>
+    </div>
+    <a href="/messages/create" class="button-link">Create a new message</a>
+    <a href="/log-out" class="button-link">Log Out</a>
+  <% } else { %>
+    <h1>Welcome to the homepage.</h1>
+    <a href="/log-in" class="button-link">Log In</a>
+    <a href="/sign-up" class="button-link">Sign up</a>
+  <% } %>
+</section>
+<section class="messages-section">
+  <h2>Messages</h2>
+  <% if (messages.length > 0) { %>
+    <% messages.forEach((message) => { %>
+      <article class="message">
+        <header class="message-header">
+          <p class="username"><%= locals.currentUser?.is_member || (locals.currentUser?.id === message.author) ? message.authorName : "anonymous" %></p>
+          <p><%= locals.currentUser?.is_member || (locals.currentUser?.id === message.author) ? message.timestamp : "when it was written..." %></p>
+          <% if (locals.currentUser?.is_admin) { %>
+            <button class="delete-button" data-id="<%= message.id %>">Delete</a>
+          <% } %>
+        </header>
+        <h3><%= message.title %></h3>
+        <p><%= message.text %></p>
+      </article>
+    <% }) %>
+  <% } else { %>
+    <p>There are currently no messages.</p>
+  <% } %>
+</section>
+<div class="sidebar">
+  <section class="users-online">
+    <h3>Users Online</h3>
+    <ul>
+      <li>
+        <a href="#" class="user-link">
+          <img src="images/profilePictures/heisenberger.jpg" alt="profile picture">
+          Heisenberger
+        </a>
+      </li>
+      <li>
+        <a href="#" class="user-link">
+          <img src="images/profilePictures/enigma.jpg" alt="profile picture">
+          ENigma
+        </a>
+      </li>
+      <li>
+        <a href="#" class="user-link">
+          <img src="images/profilePictures/cartman.png" alt="profile picture">
+          cartman
+        </a>
+      </li>
+      <li>
+        <a href="#" class="user-link">
+          <img src="images/profilePictures/a321.jpg" alt="profile picture">
+          A321
+        </a>
+      </li>
+      <li>
+        <a href="#" class="see-more">
+          See more...
+        </a>
+      </li>
+    </ul>
   </section>
-  <section class="messages-section">
-    <h2>Messages</h2>
-    <% if (messages.length > 0) { %>
-      <% messages.forEach((message) => { %>
-        <article class="message">
-          <header class="message-header">
-            <p class="username"><%= locals.currentUser?.is_member || (locals.currentUser?.id === message.author) ? message.authorName : "anonymous" %></p>
-            <p><%= locals.currentUser?.is_member || (locals.currentUser?.id === message.author) ? message.timestamp : "when it was written..." %></p>
-            <% if (locals.currentUser?.is_admin) { %>
-              <button class="delete-button" data-id="<%= message.id %>">Delete</a>
-            <% } %>
-          </header>
-          <h3><%= message.title %></h3>
-          <p><%= message.text %></p>
-        </article>
-      <% }) %>
-    <% } else { %>
-      <p>There are currently no messages.</p>
-    <% } %>
+  <section class="advertisement-section">
+    <h3>Advertisement</h3>
+    <img src="images/fake-advertisement.jpg" alt="A picturesque view of a tropical resort">
   </section>
-  <div class="sidebar">
-    <section class="users-online">
-      <h3>Users Online</h3>
-      <ul>
-        <li>
-          <a href="#" class="user-link">
-            <img src="images/profilePictures/heisenberger.jpg" alt="profile picture">
-            Heisenberger
-          </a>
-        </li>
-        <li>
-          <a href="#" class="user-link">
-            <img src="images/profilePictures/enigma.jpg" alt="profile picture">
-            ENigma
-          </a>
-        </li>
-        <li>
-          <a href="#" class="user-link">
-            <img src="images/profilePictures/cartman.png" alt="profile picture">
-            cartman
-          </a>
-        </li>
-        <li>
-          <a href="#" class="user-link">
-            <img src="images/profilePictures/a321.jpg" alt="profile picture">
-            A321
-          </a>
-        </li>
-        <li>
-          <a href="#" class="see-more">
-            See more...
-          </a>
-        </li>
-      </ul>
+</div>
+<section class="delete-confirmation-section hidden">
+  <form method="POST" class="delete-confirmation-form">
+    <h1>Are you sure?</h1>
+    <p>Deleting is PERMANENT, so be careful before deleting!</p>
+    <section class="delete-confirmation-buttons">
+      <button type="button" class="form-cancel-button">Cancel</button>
+      <button type="submit" class="form-delete-button">Delete</button>
     </section>
-    <section class="advertisement-section">
-      <h3>Advertisement</h3>
-      <img src="images/fake-advertisement.jpg" alt="A picturesque view of a tropical resort">
-    </section>
-  </div>
-  <section class="delete-confirmation-section hidden">
-    <form method="POST" class="delete-confirmation-form">
-      <h1>Are you sure?</h1>
-      <p>Deleting is PERMANENT, so be careful before deleting!</p>
-      <section class="delete-confirmation-buttons">
-        <button type="button" class="form-cancel-button">Cancel</button>
-        <button type="submit" class="form-delete-button">Delete</button>
-      </section>
-    </form>
-    <div class="overlay hidden"></div>
-  </section>
-</main>
+  </form>
+  <div class="overlay hidden"></div>
+</section>
