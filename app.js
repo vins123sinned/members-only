@@ -51,11 +51,14 @@ app.use("/membership", membershipRouter);
 app.use("/messages", messageRouter);
 app.use((err, req, res, next) => {
   console.error(err);
-  res.status(err.statusCode || 500).render("error", {
+  res.status(err.statusCode || 500).render("layout", {
     title: "Error",
+    path: "partials/error.ejs",
     message: err.message,
   });
 });
+
+// add a custom error for unauthorized routes
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, (error) => {
