@@ -58,8 +58,6 @@ app.use((err, req, res, next) => {
   });
 });
 
-// add a custom error for unauthorized routes
-
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, (error) => {
   if (error) throw error;
