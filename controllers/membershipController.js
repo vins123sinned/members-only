@@ -1,6 +1,7 @@
 import { body, matchedData, validationResult } from "express-validator";
 import { lengthErr, requiredErr } from "../utils.js";
 import { updateAdminStatus, updateMemberStatus } from "../db/queries.js";
+import { UnauthorizedError } from "../errors/unauthorizedError.js";
 
 // currently this validation works for both the member and admin form
 const validateMembershipForm = [
@@ -16,7 +17,7 @@ const validateMembershipForm = [
 const getMemberForm = (req, res, next) => {
   if (!res.locals.currentUser)
     return next(
-      new Error("You must be logged in in order to access this page"),
+      new UnauthorizedError("You must be logged in order to access this page!"),
     );
   if (res.locals.currentUser.is_member)
     return res.render("layout", {
@@ -73,7 +74,7 @@ const postMemberForm = [
 const getAdminForm = (req, res, next) => {
   if (!res.locals.currentUser)
     return next(
-      new Error("You must be logged in in order to access this page"),
+      new UnauthorizedError("You must be logged in order to access this page!"),
     );
   if (res.locals.currentUser.is_admin)
     return res.render("layout", {

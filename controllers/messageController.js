@@ -1,6 +1,7 @@
 import { body, matchedData, validationResult } from "express-validator";
 import { lengthErr, requiredErr } from "../utils.js";
 import { deleteMessage, insertMessage } from "../db/queries.js";
+import { UnauthorizedError } from "../errors/unauthorizedError.js";
 
 const validateMessageForm = [
   body("title")
@@ -25,7 +26,9 @@ const getMessageForm = (req, res, next) => {
       title: "Create a New Message",
     });
   } else {
-    next(new Error("You must be logged in in order to access this page"));
+    next(
+      new UnauthorizedError("You must be logged in order to access this page!"),
+    );
   }
 };
 
