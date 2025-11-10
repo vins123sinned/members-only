@@ -1,4 +1,4 @@
-<section class="log-in-section">
+<section class="log-in-section main-section">
   <form action="/log-in" method="POST" novalidate>
     <h1>Log In</h1>
     <p>Required fields are followed by a <strong><span aria-label="required" class="required">*</span></strong></p>
@@ -15,9 +15,9 @@
         <input type="password" id="password" name="password" maxlength="255" value="<%= locals.previousValues?.password %>" required>
       </p>
     </section>
-    <section>
-      <button type="submit">Log in</button>
+    <section class="buttons-section">
+      <button type="submit" class="submit-button">Log in</button>
     </section>
   </form>
-  <p>Don't have an account? <a href="/sign-up">Sign up today.</a></p>
+  <p class="sign-up-para">Don't have an account? <a href="/sign-up" class="sign-up-link">Sign up today.</a></p>
 </section>
