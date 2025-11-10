@@ -22,8 +22,8 @@ main section:not(.delete-confirmation-section, .delete-confirmation-buttons) {
   font-weight: var(--button-weight);
   text-decoration: none;
   color: inherit;
-  background-color: #f5ffca;
-  border: 1px solid var(--border-color);
+  background-color: var(--button-color);
+  border: none;
   border-radius: var(--button-radius);
   padding: var(--button-padding);
   margin-bottom: 0.25rem;
@@ -34,7 +34,7 @@ main section:not(.delete-confirmation-section, .delete-confirmation-buttons) {
 }
 
 .welcome-section .button-link:hover {
-  background-color: #f8ffdd;
+  background-color: var(--button-hover-color);
 }
 
 .membership-status {
@@ -88,7 +88,7 @@ main section:not(.delete-confirmation-section, .delete-confirmation-buttons) {
 
   display: none;
   font-weight: 500;
-  background-color: var(--delete-background);
+  background-color: var(--red-color);
   color: #fff;
   border: none;
   border-radius: 5px;
