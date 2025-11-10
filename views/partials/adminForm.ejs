@@ -1,0 +1,20 @@
+<!-- While they can be combined with the membership form (DRY), I might change up how the admin status is given so I won't prematurely optimize my code here -->
+<section class="admin-form-section">
+  <form action="/membership/admin" method="POST" novalidate>
+    <h1>Become an Admin</h1>
+    <p>Have the ability to delete users however you wish! But first, you must answer the one true ring... uh I meant riddle.</p>
+    <section>
+      <!-- It's Moderator! -->
+      <p>
+        <label for="answer">I hold the gate where riddles spin. Order I keep, chaos I pin; who am I?</label>
+        <input type="text" id="answer" name="answer" maxlength="25" value="<%= locals.previousValues?.answer %>" required>
+        <span class="error" role="alert" aria-live="polite">
+          <%= locals.errors?.find(error => error.path === 'answer')?.msg %>
+        </span>
+      </p>
+    </section>
+    <section>
+      <button type="submit">Answer</button>
+    </section>
+  </form>
+</section>

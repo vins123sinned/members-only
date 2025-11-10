@@ -23,8 +23,9 @@ const getMemberForm = (req, res) => {
       body: "As a member, you will be able to see the name and date of other messages!",
     });
 
-  res.render("membershipForm", {
+  res.render("layout", {
     title: "Become a Member",
+    path: "partials/membershipForm.ejs",
   });
 };
 
@@ -33,8 +34,9 @@ const postMemberForm = [
   async (req, res, next) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      return res.status(400).render("membershipForm", {
+      return res.status(400).render("layout", {
         title: "Become a Member",
+        path: "partials/membershipForm.ejs",
         previousValues: req.body,
         errors: errors.array(),
       });
@@ -53,8 +55,9 @@ const postMemberForm = [
         next(err);
       }
     } else {
-      return res.status(400).render("membershipForm", {
+      return res.status(400).render("layout", {
         title: "Become a Member",
+        path: "partials/membershipForm.ejs",
         previousValues: req.body,
         errors: [
           {
@@ -77,8 +80,9 @@ const getAdminForm = (req, res) => {
       body: "As an admin, you will be able to moderate and delete any inappropriate messages!",
     });
 
-  res.render("adminForm", {
+  res.render("layout", {
     title: "Become an Admin",
+    path: "partials/adminForm.ejs",
   });
 };
 
@@ -87,8 +91,9 @@ const postAdminForm = [
   async (req, res, next) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      return res.status(400).render("adminForm", {
+      return res.status(400).render("layou", {
         title: "Become a Member",
+        path: "partials/adminForm.ejs",
         previousValues: req.body,
         errors: errors.array(),
       });
@@ -107,8 +112,9 @@ const postAdminForm = [
         next(err);
       }
     } else {
-      return res.status(400).render("adminForm", {
+      return res.status(400).render("layout", {
         title: "Become an Admin",
+        path: "partials/adminForm.ejs",
         previousValues: req.body,
         errors: [
           {
