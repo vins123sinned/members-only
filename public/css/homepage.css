@@ -61,7 +61,7 @@ main section:not(.delete-confirmation-section, .delete-confirmation-buttons) {
 .message {
   background-color: #fff;
   border: 1px solid var(--border-color);
-  border-radius: 5px;
+  border-radius: var(--button-radius);
   line-height: 1.5;
   padding: 0.75rem;
   margin-bottom: 1rem;
@@ -87,12 +87,12 @@ main section:not(.delete-confirmation-section, .delete-confirmation-buttons) {
   right: 0;
 
   display: none;
-  font-weight: 500;
+  font-weight: var(--button-weight);
   background-color: var(--red-color);
   color: #fff;
   border: none;
-  border-radius: 5px;
-  padding: 0.5rem 0.75rem;
+  border-radius: var(--button-radius);
+  padding: var(--button-padding);
 }
 
 .delete-button:hover {
@@ -164,7 +164,7 @@ main section:not(.delete-confirmation-section, .delete-confirmation-buttons) {
 }
 
 .delete-confirmation-buttons .form-delete-button {
-  background-color: var(--delete-background);
+  background-color: var(--red-color);
   color: #fff;
 }
 
@@ -201,8 +201,8 @@ main section:not(.delete-confirmation-section, .delete-confirmation-buttons) {
 }
 
 .users-online .user-link:hover {
-  background-color: #f1f1f1;
-  border-radius: 5px;
+  background-color: var(--cancel-background-hover);
+  border-radius: var(--button-radius);
 }
 
 .users-online img {

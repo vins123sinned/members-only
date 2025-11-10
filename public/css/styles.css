@@ -16,6 +16,7 @@
   --button-weight: 500;
   --button-radius: 5px;
   --red-color: #ee5663;
+  --cancel-background-hover: #f1f1f1;
 }
 
 *,
@@ -67,6 +68,11 @@ label {
 a,
 a:visited {
   color: #4b3f72;
+}
+
+button {
+  font-size: 1rem;
+  line-height: 1.5;
 }
 
 button:hover {

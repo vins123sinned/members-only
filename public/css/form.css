@@ -16,6 +16,7 @@ main {
   margin-top: 2rem;
 }
 
+.message-form-section,
 .log-in-section {
   margin-top: -4rem;
 }
@@ -60,6 +61,26 @@ p {
   display: flex;
   justify-content: flex-end;
   margin: 2rem auto 1rem auto;
+}
+
+.cancel-button {
+  display: block;
+  font-weight: var(--button-weight);
+  text-decoration: none;
+  color: #000 !important;
+  background-color: #ededed;
+  border-radius: var(--button-radius);
+  padding: var(--button-padding);
+  margin-right: 0.75rem;
+  transition: transform 0.1s ease;
+}
+
+.cancel-button:hover {
+  background-color: var(--cancel-background-hover);
+}
+
+.cancel-button:active {
+  transform: scale(0.95);
 }
 
 .submit-button {
