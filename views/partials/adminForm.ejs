@@ -1,8 +1,8 @@
 <!-- While they can be combined with the membership form (DRY), I might change up how the admin status is given so I won't prematurely optimize my code here -->
-<section class="admin-form-section">
+<section class="admin-form-section main-section">
   <form action="/membership/admin" method="POST" novalidate>
     <h1>Become an Admin</h1>
-    <p>Have the ability to delete users however you wish! But first, you must answer the one true ring... uh I meant riddle.</p>
+    <p class="introduction-para">Have the ability to delete users however you wish! But first, you must answer the one true ring... uh I meant riddle.</p>
     <section>
       <!-- It's Moderator! -->
       <p>
@@ -13,8 +13,8 @@
         </span>
       </p>
     </section>
-    <section>
-      <button type="submit">Answer</button>
+    <section class="buttons-section">
+      <button type="submit" class="submit-button">Answer</button>
     </section>
   </form>
 </section>

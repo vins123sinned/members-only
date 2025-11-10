@@ -1,0 +1,81 @@
+main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: clamp(1rem, 5vw, 3rem);
+}
+
+.main-section {
+  line-height: 1.5;
+  text-align: center;
+  background-color: #fff;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  border-radius: 5px;
+  width: 100%;
+  max-width: 35rem;
+  padding: clamp(1rem, 4vw, 1.5rem) clamp(1rem, 4vw, 2.5rem);
+  margin-top: -4rem;
+}
+
+.introduction-para {
+  color: #3f3f3f;
+  margin-bottom: 1rem;
+}
+
+label {
+  font-size: 1.1rem;
+  font-weight: 500;
+  margin: 1.5rem 0 1rem 0;
+}
+
+input {
+  font-size: 1rem;
+  text-align: center;
+  line-height: 1.5;
+  display: block;
+  border: 1px solid #cacaca;
+  border-radius: 5px;
+  width: 100%;
+  max-width: 20rem;
+  padding: 0.25rem;
+  margin: auto;
+}
+
+.buttons-section {
+  margin: 1rem 0;
+}
+
+.submit-button {
+  font-size: 1rem;
+  font-weight: var(--button-weight);
+  background-color: var(--button-color);
+  border: none;
+  border-radius: var(--button-radius);
+  padding: var(--button-padding);
+}
+
+.submit-button:hover {
+  background-color: var(--button-hover-color);
+  transition: transform 0.1s ease;
+}
+
+.submit-button:active {
+  transform: scale(0.95);
+}
+
+.error {
+  font-weight: 500;
+  color: var(--red-color);
+  margin-top: 0.25rem;
+}
+
+@media (max-width: 350px) {
+  .main-section h1 {
+    line-height: 1;
+    margin-bottom: 1rem;
+  }
+
+  .main-section {
+    margin-top: -6rem;
+  }
+}

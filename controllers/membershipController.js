@@ -91,7 +91,7 @@ const postAdminForm = [
   async (req, res, next) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      return res.status(400).render("layou", {
+      return res.status(400).render("layout", {
         title: "Become a Member",
         path: "partials/adminForm.ejs",
         previousValues: req.body,
