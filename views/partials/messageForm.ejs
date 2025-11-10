@@ -1,0 +1,26 @@
+<section class="message-form-section main-section">
+  <form action="/messages/create" method="POST" novalidate>
+    <h1>Create a New Message</h1>
+    <p>Required fields are followed by a <strong><span aria-label="required" class="required">*</span></strong></p>
+    <section>
+      <p>
+        <label for="title">Title <strong><span aria-label="required" class="required">*</span></strong></label>
+        <input type="text" id="title" name="title" maxlength="255" value="<%= locals.previousValues?.title %>" required>
+        <span class="error" role="alert" aria-live="polite">
+          <%= locals.errors?.find(error => error.path === 'title')?.msg %>
+        </span>
+      </p>
+      <p>
+        <label for="text">Text <strong><span aria-label="required" class="required">*</span></strong></label>
+        <input type="text" id="text" name="text" maxlength="1000" value="<%= locals.previousValues?.text %>" required>
+        <span class="error" role="alert" aria-live="polite">
+          <%= locals.errors?.find(error => error.path === 'text')?.msg %>
+        </span>
+      </p>
+    </section>
+    <section class="buttons-section">
+      <a href="/" class="cancel-button">Cancel</a>
+      <button type="submit" class="submit-button">Create</button>
+    </section>
+  </form>
+</section>

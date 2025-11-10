@@ -23,8 +23,9 @@ const validateMessageForm = [
 const getMessageForm = (req, res, next) => {
   if (!res.locals.currentUser) return res.redirect("/log-in");
 
-  res.render("messageForm", {
+  res.render("layout", {
     title: "Create a New Message",
+    path: "partials/messageForm.ejs",
   });
 };
 
@@ -33,8 +34,9 @@ const postMessageForm = [
   async (req, res, next) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      return res.status(400).render("messageForm", {
+      return res.status(400).render("layout", {
         title: "Create a New Message",
+        path: "partials/messageForm.ejs",
         previousValues: req.body,
         errors: errors.array(),
       });
