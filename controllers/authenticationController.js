@@ -97,8 +97,9 @@ const validateSignIn = [
 const getSignUp = (req, res) => {
   if (res.locals.currentUser) return res.redirect("/");
 
-  res.render("signUp", {
+  res.render("layout", {
     title: "Sign Up",
+    path: "partials/signUp.ejs",
   });
 };
 
@@ -107,8 +108,9 @@ const postSignUp = [
   async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      return res.status(400).render("signUp", {
+      return res.status(400).render("layout", {
         title: "Sign Up",
+        path: "partials/signUp.ejs",
         previousValues: req.body,
         errors: errors.array(),
       });
@@ -127,8 +129,9 @@ const postSignUp = [
 ];
 
 const getLogIn = (req, res) => {
-  res.render("logIn", {
+  res.render("layout", {
     title: "Log In",
+    path: "partials/logIn.ejs",
   });
 };
 
@@ -139,8 +142,9 @@ const postLogIn = (req, res, next) => {
     if (err) return next(err);
 
     if (!user) {
-      return res.status(400).render("logIn", {
+      return res.status(400).render("layout", {
         title: "Log In",
+        path: "partials/logIn.ejs",
         previousValues: req.body,
         errors: [
           {
