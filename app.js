@@ -49,7 +49,12 @@ app.use("/", indexRouter);
 app.use("/", authenticationRouter);
 app.use("/membership", membershipRouter);
 app.use("/messages", messageRouter);
-app.get("/{*splat}", (req, res) => res.render("error404"));
+app.get("/{*splat}", (req, res) =>
+  res.render("layout", {
+    title: "Page Not Found",
+    path: "partials/error404.ejs",
+  }),
+);
 app.use((err, req, res, next) => {
   console.error(err);
   res.status(err.statusCode || 500).render("layout", {

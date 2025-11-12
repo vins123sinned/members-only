@@ -1,0 +1,24 @@
+main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.error-section {
+  text-align: center;
+  max-width: 30rem;
+  margin: 1rem;
+}
+
+h1 {
+  font-size: clamp(3rem, 13vw, 6rem);
+}
+
+p {
+  font-size: clamp(1rem, 4vw, 1.1rem);
+  margin: 1rem 0;
+}
+
+.logo {
+  justify-content: center;
+}
