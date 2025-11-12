@@ -49,7 +49,7 @@ app.use("/", indexRouter);
 app.use("/", authenticationRouter);
 app.use("/membership", membershipRouter);
 app.use("/messages", messageRouter);
-app.get("/{*splat}", (req, res) => res.send("Hey! Error 404!"));
+app.get("/{*splat}", (req, res) => res.render("error404"));
 app.use((err, req, res, next) => {
   console.error(err);
   res.status(err.statusCode || 500).render("layout", {
