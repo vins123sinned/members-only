@@ -1,6 +1,6 @@
 import { body, matchedData, validationResult } from "express-validator";
 import { lengthErr, requiredErr } from "../utils.js";
-import { deleteMessage, insertMessage } from "../db/queries.js";
+import { messages } from "../db/entities/Messages.js";
 import { ForbiddenError } from "../errors/ForbiddenError.js";
 
 const validateMessageForm = [
@@ -45,7 +45,7 @@ const postMessageForm = [
     const { title, text } = matchedData(req);
     try {
       const authorId = res.locals.currentUser.id;
-      await insertMessage(title, text, authorId);
+      await messages.insertMessage(title, text, authorId);
       res.redirect("/");
     } catch (err) {
       console.log(err);
@@ -63,7 +63,7 @@ const postMessageDelete = async (req, res, next) => {
 
   const { messageId } = req.params;
   try {
-    await deleteMessage(messageId);
+    await messages.deleteMessage(messageId);
     res.redirect("/");
   } catch (err) {
     console.log(err);

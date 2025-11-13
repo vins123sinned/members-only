@@ -2,7 +2,7 @@ import { Router } from "express";
 import passport from "passport";
 import { Strategy as LocalStrategy } from "passport-local";
 import bcrypt from "bcryptjs";
-import { getUserById, getUserByUsername } from "../db/queries.js";
+import { users } from "../db/entities/Users.js";
 import {
   getLogIn,
   getLogOut,
@@ -12,7 +12,7 @@ import {
 } from "../controllers/authenticationController.js";
 
 const verify = async (username, password, done) => {
-  const user = await getUserByUsername(username);
+  const user = await users.getUserByUsername(username);
 
   try {
     if (!user) return done(null, false, { message: "Incorrect username!" });
@@ -33,7 +33,7 @@ passport.serializeUser((user, done) => {
 
 passport.deserializeUser(async (id, done) => {
   try {
-    const user = await getUserById(id);
+    const user = await users.getUserById(id);
     done(null, user);
   } catch (err) {
     done(err);

@@ -1,6 +1,6 @@
 import { body, matchedData, validationResult } from "express-validator";
 import { lengthErr, requiredErr } from "../utils.js";
-import { updateAdminStatus, updateMemberStatus } from "../db/queries.js";
+import { users } from "../db/entities/Users.js";
 
 // currently this validation works for both the member and admin form
 const validateMembershipForm = [
@@ -48,7 +48,7 @@ const postMemberForm = [
       answer.toLowerCase() === "footsteps"
     ) {
       try {
-        await updateMemberStatus(res.locals.currentUser.id);
+        await users.updateMemberStatus(res.locals.currentUser.id);
         res.redirect("/");
       } catch (err) {
         console.log(err);
@@ -105,7 +105,7 @@ const postAdminForm = [
       answer.toLowerCase() === "admin"
     ) {
       try {
-        await updateAdminStatus(res.locals.currentUser.id);
+        await users.updateAdminStatus(res.locals.currentUser.id);
         res.redirect("/");
       } catch (err) {
         console.log(err);

@@ -1,7 +1,7 @@
 import passport from "passport";
 import bcrypt from "bcryptjs";
 import { body, validationResult, matchedData } from "express-validator";
-import { getUserByUsername, insertUser } from "../db/queries.js";
+import { users } from "../db/entities/Users.js";
 import { lengthErr, requiredErr } from "../utils.js";
 
 const alphaErr = "must only contain letters";
@@ -43,7 +43,7 @@ const validateSignIn = [
     .bail()
     .custom(async (value) => {
       // checks if username is already in the database
-      const user = await getUserByUsername(value);
+      const user = await users.getUserByUsername(value);
 
       if (user) throw new Error("Existing username in database");
       return true;
@@ -119,7 +119,7 @@ const postSignUp = [
     const { first_name, last_name, username, password } = matchedData(req);
     try {
       const hashedPassword = await bcrypt.hash(password, 10);
-      await insertUser(first_name, last_name, username, hashedPassword);
+      await users.insertUser(first_name, last_name, username, hashedPassword);
       res.redirect("/");
     } catch (err) {
       console.log(err);
